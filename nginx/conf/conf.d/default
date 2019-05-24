@@ -1,0 +1,36 @@
+    server {
+        listen       80;
+        server_name  localhost;
+
+        gzip on; #开启gizip
+        gzip_buffers 32 4K;#压缩在内存中缓冲32块? 每块4K
+        gzip_comp_level 6 ;#压缩级别 推荐6
+        gzip_min_length 4000;#开始压缩的最小长度4bit
+        gzip_types text/css text/xml apploation/x-javascript;#只对CSS、XML、HTML、JS文件进行压缩
+
+        #charset koi8-r;
+
+        #access_log  logs/host.access.log  main;
+
+        root   /var/www;
+
+        location / {
+            try_files $uri $uri/ /index.php?$query_string; #隐藏index.php入口文件
+            index  index.html index.htm index.php;
+        
+        #如果是jpg、jpeg、gif、png、js、css则缓存一天
+        if ($fastcgi_script_name ~* \.[jpg|jpeg|gif|png|js|css] ) {
+            expires 1d;
+            }
+        }
+
+        # pass the PHP scripts to FastCGI server listening on 127.0.0.1:9000
+        #
+        location ~ \.php($|/) { 
+            proxy_redirect off;
+            proxy_set_header Host $host;
+            proxy_set_header X-Real-IP $remote_addr;
+            proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+            proxy_pass http://app:80;      # 这里设置你要代理的ip+端口
+        }
+    }

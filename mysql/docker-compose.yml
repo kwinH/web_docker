@@ -1,0 +1,22 @@
+version: '3'
+services:
+    mysql:
+      image: mysql:8.0
+      command: --default-authentication-plugin=mysql_native_password
+      container_name: mysql
+      restart: always
+      ports:    #端口映射
+        - 3306:3306    
+      networks:
+        - web
+      volumes:
+        - ./conf/conf.d:/etc/mysql/conf.d
+        - ./conf/my.cnf:/etc/mysql/conf/my.cnf
+        - ./data:/var/lib/mysql
+        - ./logs:/logs
+      environment:
+        -  MYSQL_ROOT_PASSWORD=root
+networks:
+  web:
+    external: true # 不创建network
+        

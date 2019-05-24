@@ -1,0 +1,20 @@
+version: '3'
+services:
+    nginx:
+      image: nginx
+      container_name: nginx
+      restart: always    #重启方案
+      ports:    #端口映射
+        - 80:80    
+        - 443:443
+      networks:
+        - web
+      volumes:
+        - ./conf/conf.d:/etc/nginx/conf.d  #nginx配置文件目录
+        - ./conf/nginx.conf:/etc/nginx/nginx.conf
+        - ./www:/var/www
+        - ./logs:/var/log/nginx
+networks:
+  web:
+    external: true # 不创建network
+        

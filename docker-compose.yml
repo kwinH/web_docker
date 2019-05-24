@@ -1,0 +1,16 @@
+version: '3'
+services:
+    php:
+      image: php7.3-apache
+      container_name: test
+      restart: always
+      networks:
+        - web
+      volumes:
+        - ./nginx/www:/var/www/html
+      environment:
+        -  APACHE_DOCUMENT_ROOT=/var/www/html/public
+networks:
+  web:
+    external: true # 不创建network
+        
