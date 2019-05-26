@@ -5,6 +5,7 @@ services:
       command: --default-authentication-plugin=mysql_native_password
       container_name: mysql
       restart: always
+      privileged: true
       ports:    #端口映射
         - 3306:3306    
       networks:

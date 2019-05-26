@@ -4,6 +4,7 @@ services:
       image: php7.3-apache
       container_name: test
       restart: always
+      privileged: true
       networks:
         - web
       volumes:
