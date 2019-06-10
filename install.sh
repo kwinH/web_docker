@@ -31,7 +31,7 @@ echo '请输入你要创建的项目名称:'
 read projectName
 
 sed -i 's/\(container_name: \).*/\1'"$projectName"'/' docker-compose.yml
-sed -i 's/\(\/nginx\/www\/\).*:/\1'"$projectName"':/' docker-compose.yml
+sed -i 's/\(nginx\/www\).*:/\1\/'"$projectName"':/' docker-compose.yml
 
 
 echo '启动文件是否在public文件夹下[n/y] 直接回车 默认y 其他目录则请输入目录名:'
@@ -62,7 +62,7 @@ nginxConfPath="${basePath}/nginx/conf/conf.d/"
 cp ${nginxConfPath}default ${nginxConfPath}${projectName}.conf 
 
 sed -i 's/\(\/var\/www\).*/\1'"$projectRoot"';/' ${nginxConfPath}${projectName}.conf
-sed -i 's/\(http:\/\/\).*/\1'"$projectName"':9000;/' ${nginxConfPath}${projectName}.conf
+sed -i 's/\(http:\/\/\).*/\1'"$projectName"':80;/' ${nginxConfPath}${projectName}.conf
 
 
 echo '请输入要绑定的域名:'
