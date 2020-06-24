@@ -14,7 +14,7 @@ services:
         - ./conf/conf.d:/etc/mysql/conf.d
         - ./conf/my.cnf:/etc/mysql/conf/my.cnf
         - ./data:/var/lib/mysql
-        - ./logs:/logs
+        - ./logs:/var/log/mysql
       environment:
         -  MYSQL_ROOT_PASSWORD=root
 networks:

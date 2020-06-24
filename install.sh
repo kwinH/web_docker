@@ -39,15 +39,15 @@ read isPublic
 isPublic=${isPublic:-"y"}
 
 if [ $isPublic == "y" ]; then
-projectPath="${basePath}/nginx/www/${projectName}/public"
+projectPath="${basePath}/php-projects/${projectName}/public"
 projectRoot="\/${projectName}\/public"
 sed -i 's/\(APACHE_DOCUMENT_ROOT=\/var\/www\/html\).*/\1\/public/' docker-compose.yml
 elif [ $isPublic == "n" ]; then
-projectPath="${basePath}/nginx/www/${projectName}"
+projectPath="${basePath}/php-projects/${projectName}"
 projectRoot="\/${projectName}"
 sed -i 's/\(APACHE_DOCUMENT_ROOT=\/var\/www\/html\).*/\1/' docker-compose.yml
 else
-projectPath="${basePath}/nginx/www/${projectName}/${isPublic}"
+projectPath="${basePath}/php-projects/${projectName}/${isPublic}"
 projectRoot="\/${projectName}\/${isPublic}"
 sed -i 's/\(APACHE_DOCUMENT_ROOT=\/var\/www\/html\).*/\1\/'"$isPublic"'/' docker-compose.yml
 fi
