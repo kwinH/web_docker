@@ -11,6 +11,8 @@ services:
       networks:
         - web
       volumes:
+        - ./conf/php.ini:/usr/local/etc/php/php.ini
+        - ./conf/php-fpm.conf:/usr/local/etc/php-fpm.d/www.conf
         - ../project:/var/www
 networks:
   web:
