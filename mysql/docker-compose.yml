@@ -23,12 +23,12 @@ services:
         source: ./logs
         target: /var/log/mysql
       - type: volume
-        source: mysql-data
+        source: data
         target: /var/lib/mysql
       environment:
         -  MYSQL_ROOT_PASSWORD=root
 volumes:
-  mysql-data:
+  data:
 networks:
   web:
     external: true # 不创建network
