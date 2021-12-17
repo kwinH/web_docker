@@ -11,12 +11,24 @@ services:
       networks:
         - web
       volumes:
-        - ./conf/conf.d:/etc/mysql/conf.d
-        - ./conf/my.cnf:/etc/mysql/conf/my.cnf
-        - ./data:/var/lib/mysql
-        - ./logs:/var/log/mysql
+      - type: bind
+        source: ./conf/my.cnf
+        target: /etc/mysql/conf/my.cnf
+        read_only: true
+      - type: bind
+        source: ./conf/conf.d
+        target: /etc/mysql/conf.d
+        read_only: true
+      - type: bind
+        source: ./logs
+        target: /var/log/mysql
+      - type: volume
+        source: mysql-data
+        target: /var/lib/mysql
       environment:
         -  MYSQL_ROOT_PASSWORD=root
+volumes:
+  mysql-data:
 networks:
   web:
     external: true # 不创建network

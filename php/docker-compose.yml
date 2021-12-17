@@ -1,0 +1,17 @@
+version: '3'
+
+services:
+    php:
+      container_name: php
+      build:
+        context: ./
+      image: php:7.4
+      restart: always
+      privileged: true
+      networks:
+        - web
+      volumes:
+        - ../project:/var/www
+networks:
+  web:
+    external: true # 不创建network

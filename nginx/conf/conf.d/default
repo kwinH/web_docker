@@ -2,15 +2,17 @@
         listen       80;
         server_name  localhost;
 
-        gzip on; #开启gizip
-        gzip_buffers 32 4K;#压缩在内存中缓冲32块? 每块4K
-        gzip_comp_level 6 ;#压缩级别 推荐6
-        gzip_min_length 4000;#开始压缩的最小长度4bit
-        gzip_types text/css text/xml apploation/x-javascript;#只对CSS、XML、HTML、JS文件进行压缩
+        set $corsHost '';
+        if (
+        $http_origin ~ .*.(localhost|example\.com)
+        ) {
+            set $corsHost $http_origin;
+        }
 
-        #charset koi8-r;
-
-        #access_log  logs/host.access.log  main;
+        add_header Access-Control-Allow-Origin $corsHost always;
+        add_header Access-Control-Allow-Credentials true;
+        add_header Access-Control-Allow-Methods 'GET, POST, PATCH, DELETE, PUT, OPTIONS';
+        add_header Access-Control-Allow-Headers 'DNT,X-Mx-ReqToken,Keep-Alive,User-Agent,X-Requested-With,If-Modified-Since,Cache-Control,Content-Type,Authorization,token,randstr,sign,timestamp,imei,user-agent,ETag';
 
         root   /var/www;
 
