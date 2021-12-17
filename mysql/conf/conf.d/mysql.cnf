@@ -1,7 +1,7 @@
 [mysqld]
 bind-address = 0.0.0.0
 
-log-bin = /var/log/mysql/mysql-bin  # 二进制日志目录
+log-bin = /var/log/mysql/mysql/mysql-bin  # 二进制日志目录
 server-id = 1 #表示是本机的序号为1,一般来讲就是master的意思
 
 skip-name-resolve
@@ -106,10 +106,10 @@ log_bin = mysql-bin
 binlog_format = mixed
 expire_logs_days = 30 #超过30天的binlog删除
 
-log_error = /var/log/mysql-error.log #错误日志路径
+log_error = /var/log/mysql/mysql-error.log #错误日志路径
 slow_query_log = 1
 long_query_time = 1 #慢查询时间 超过1秒则为慢查询
-slow_query_log_file = /var/log/mysql-slow.log
+slow_query_log_file = /var/log/mysql/mysql-slow.log
 
 performance_schema = 0
 explicit_defaults_for_timestamp
