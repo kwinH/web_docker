@@ -1,7 +1,17 @@
     server {
         listen       80;
-        server_name  localhost;
+        listen 443 ssl http2;
+        server_name  example.com;
 
+        ssl_certificate ssl/default.crt;
+        ssl_certificate_key ssl/default.key;
+        ssl_session_timeout 5m;
+        ssl_ciphers TLS13-AES-256-GCM-SHA384:TLS13-CHACHA20-POLY1305-SHA256:TLS13-AES-128-GCM-SHA256:TLS13-AES-128-CCM-8-SHA256:TLS13-AES-128-CCM-SHA256:EECDH+CHACHA20:EECDH+CHACHA20-draft:EECDH+ECDSA+AES128:EECDH+aRSA+AES128:RSA+AES128:EECDH+ECDSA+AES256:EECDH+aRSA+AES256:RSA+AES256:EECDH+ECDSA+3DES:EECDH+aRSA+3DES:RSA+3DES:!MD5;
+        ssl_protocols TLSv1 TLSv1.1 TLSv1.2 TLSv1.3;
+        ssl_prefer_server_ciphers on;
+
+
+        # 解决跨域问题
         set $corsHost '';
         if (
         $http_origin ~ .*.(localhost|example\.com)
@@ -17,8 +27,12 @@
         root   /var/www;
 
         location / {
-            try_files $uri $uri/ /index.php?$query_string; #隐藏index.php入口文件
-            index  index.html index.htm index.php;
+        if ($request_method = 'OPTIONS') {
+        return 204;
+        }
+
+        try_files $uri $uri/ /index.php?$query_string; #隐藏index.php入口文件
+        index  index.html index.htm index.php;
         
         #如果是jpg、jpeg、gif、png、js、css则缓存一天
         if ($fastcgi_script_name ~* \.[jpg|jpeg|gif|png|js|css] ) {
@@ -26,8 +40,6 @@
             }
         }
 
-        # pass the PHP scripts to FastCGI server listening on 127.0.0.1:9000
-        #
         location ~ \.php($|/) { 
             proxy_redirect off;
             proxy_set_header Host $host;
