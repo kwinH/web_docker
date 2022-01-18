@@ -1,0 +1,20 @@
+version: '3'
+
+services:
+    php:
+      container_name: php
+ #     build:
+ #       context: ./
+      image: kwinwong/php-apache:7.3
+      restart: always
+      privileged: true
+      networks:
+        - web
+      volumes:
+        - ./conf/php.ini:/usr/local/etc/php/php.ini
+        - ../project:/var/www
+      environment:
+        -  APACHE_DOCUMENT_ROOT=/var/www/html/public        
+networks:
+  web:
+    external: true # 不创建network
